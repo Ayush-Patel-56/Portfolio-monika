@@ -29,6 +29,7 @@ const socialLinks = [
 export default function Sidebar() {
     const [active, setActive] = useState('home');
     const [tooltip, setTooltip] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -47,17 +48,72 @@ export default function Sidebar() {
     }, []);
 
     const scrollTo = (id: string) => {
+        setIsMobileMenuOpen(false);
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
         <>
-            {/* Left Sidebar — Navigation */}
+            {/* Mobile Menu Button */}
+            <button
+                className="lg:hidden fixed top-6 right-6 z-50 glass-card p-3 rounded-full flex items-center justify-center text-slate-300 hover:text-cyan-400 border border-slate-700/50 bg-[#0B1121]/80 backdrop-blur-md"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+                {isMobileMenuOpen ? (
+                   <span className="text-xl leading-none px-1">✕</span>
+                ) : (
+                   <span className="text-xl leading-none">☰</span>
+                )}
+            </button>
+
+            {/* Mobile Full-Screen Menu Overlay */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="fixed inset-0 z-40 bg-[#0B1121]/95 backdrop-blur-lg flex flex-col items-center justify-center lg:hidden"
+                    >
+                        <div className="flex flex-col gap-8 w-full max-w-sm px-8">
+                            {navItems.map(({ id, icon: Icon, label }) => (
+                                <button
+                                    key={id}
+                                    onClick={() => scrollTo(id)}
+                                    className={`flex items-center gap-6 text-2xl font-bold tracking-wider py-2 transition-colors duration-300 ${
+                                        active === id ? 'text-cyan-400' : 'text-slate-300 hover:text-cyan-300'
+                                    }`}
+                                >
+                                    <Icon className={active === id ? 'text-cyan-400' : 'text-cyan-600'} size={28} />
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+                        
+                        {/* Mobile Social Links */}
+                        <div className="flex gap-6 mt-16 mt-auto mb-12">
+                            {socialLinks.map(({ icon: Icon, url, label }) => (
+                                <a
+                                    key={label}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-slate-400 hover:text-cyan-400 bg-slate-800/50 p-3 rounded-full border border-slate-700/50"
+                                >
+                                    <Icon size={20} />
+                                </a>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Left Sidebar — Navigation (Desktop Only) */}
             <motion.aside
                 initial={{ x: -60, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.6 }}
-                className="fixed left-0 top-0 h-full w-16 flex flex-col items-center justify-center gap-4 z-50"
+                className="hidden lg:flex fixed left-0 top-0 h-full w-16 flex-col items-center justify-center gap-4 z-50"
             >
                 <div className="glass-card px-2 py-6 flex flex-col items-center gap-4">
                     {navItems.map(({ id, icon: Icon, label }) => (
@@ -91,12 +147,12 @@ export default function Sidebar() {
                 </div>
             </motion.aside>
 
-            {/* Right Sidebar — Social Links */}
+            {/* Right Sidebar — Social Links (Desktop Only) */}
             <motion.aside
                 initial={{ x: 60, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.6 }}
-                className="fixed right-0 top-0 h-full w-16 flex flex-col items-center justify-center gap-4 z-50"
+                className="hidden lg:flex fixed right-0 top-0 h-full w-16 flex-col items-center justify-center gap-4 z-50"
             >
                 <div className="glass-card px-2 py-6 flex flex-col items-center gap-4">
                     {socialLinks.map(({ icon: Icon, url, label }) => (

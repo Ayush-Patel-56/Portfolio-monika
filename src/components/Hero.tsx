@@ -79,40 +79,40 @@ export default function Hero() {
             <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
             {/* Visit counter */}
+            {/* Total Visits Badge (Relative on mobile to sit above photo, Absolute on Desktop) */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="absolute top-6 left-1/2 -translate-x-1/2 glass-card px-4 py-1.5 flex items-center gap-3"
+                className="relative lg:absolute mt-10 lg:mt-0 top-auto lg:top-6 left-1/2 -translate-x-1/2 glass-card px-4 py-1.5 flex lg:inline-flex items-center gap-3 w-fit z-20"
             >
-                <span className="text-slate-400 text-xs">Total Visits</span>
-                <span className="text-cyan-400 font-bold text-sm font-mono">{visitCount}</span>
+                <span className="text-slate-400 text-xs text-center">Total Visits</span>
+                <span className="text-cyan-400 font-bold text-sm font-mono text-center">{visitCount}</span>
             </motion.div>
 
-            <div className="max-w-6xl mx-auto px-20 w-full grid grid-cols-2 gap-12 items-center">
-                {/* Left — Photo */}
+            <div className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-8 lg:mt-0">
+                {/* Left — Photo (First on Mobile) */}
                 <motion.div
                     initial={{ opacity: 0, x: -60 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, ease: 'easeOut' }}
                     className="relative flex flex-col items-center"
                 >
-                    {/* Glowing bottom line */}
                     {/* Floating Image without container */}
-                    <div className="relative group flex flex-col items-center mt-4 -ml-8 md:-ml-16 lg:-ml-24 xl:-ml-36 w-full">
-                        {/* Massively enlarged bounding box shifted left */}
-                        <div className="relative w-[110%] md:w-[130%] max-w-[700px] h-[500px] md:h-[650px] flex items-end justify-center">
+                    <div className="relative group flex flex-col items-center mt-4 lg:mt-0 lg:-ml-12 xl:-ml-24 w-full">
+                        {/* Enlarged bounding box shifted left on desktop only */}
+                        <div className="relative w-[100%] sm:w-[90%] lg:w-[130%] max-w-[700px] h-[350px] sm:h-[450px] md:h-[500px] lg:h-[650px] flex items-end justify-center">
                             
                             {/* Ambient background glow effect behind the transparent image */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-cyan-500/10 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none" />
                             
                             {/* The overflow-hidden container creates a perfectly flat "floor" cut at the bottom if the image has uneven edges */}
-                            <div className="absolute inset-x-0 top-0 bottom-0 overflow-hidden flex items-end justify-center z-10">
+                            <div className="absolute inset-x-0 top-0 bottom-0 overflow-hidden flex items-end justify-center z-10 w-full">
                                 {/* Real Image */}
                                 <img
                                     src="/monika.png"
                                     alt="Monika Jakhar"
-                                    className="w-[120%] h-[120%] max-w-none ml-[-10%] object-contain transition-transform duration-500 ease-out group-hover:scale-105"
+                                    className="w-[110%] h-[110%] lg:w-[120%] lg:h-[120%] max-w-none ml-[-5%] lg:ml-[-10%] object-contain transition-transform duration-500 ease-out group-hover:scale-105"
                                     style={{
                                         objectPosition: 'center bottom',
                                         filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.6))',
@@ -122,8 +122,8 @@ export default function Hero() {
                             </div>
                             
                             {/* Base glowing rest line placed exactly at the floor edge (bottom-0) */}
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[4px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent blur-[5px] z-20 pointer-events-none" />
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent z-30 pointer-events-none" />
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100%] sm:w-[120%] h-[3px] lg:h-[4px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent blur-[4px] lg:blur-[5px] z-20 pointer-events-none" />
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] sm:w-full h-px lg:h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent z-30 pointer-events-none" />
                         </div>
 
                         {/* Signature-style name gracefully overlapping image base */}
@@ -131,7 +131,7 @@ export default function Hero() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 1, duration: 0.8 }}
-                            className="-mt-12 mr-16 self-end sm:mr-32 relative z-40 text-white/95 text-6xl sm:text-7xl italic tracking-wide pointer-events-none"
+                            className="-mt-8 sm:-mt-12 self-center lg:self-end lg:mr-24 relative z-40 text-white/95 text-5xl sm:text-7xl italic tracking-wide pointer-events-none"
                             style={{ 
                                 fontFamily: "cursive, 'Brush Script MT', 'Dancing Script', serif",
                                 textShadow: '0 4px 12px rgba(0,0,0,0.5)',
@@ -143,14 +143,14 @@ export default function Hero() {
                     </div>
                 </motion.div>
 
-                {/* Right — Content */}
+                {/* Right — Content (Second on Mobile) */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="flex flex-col gap-5"
+                    className="flex flex-col gap-5 text-center lg:text-left"
                 >
-                    <motion.h1 variants={itemVariants} className="text-5xl font-black text-white leading-tight">
+                    <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-white leading-tight">
                         Hi, I am{' '}
                         <span
                             className="text-transparent bg-clip-text"

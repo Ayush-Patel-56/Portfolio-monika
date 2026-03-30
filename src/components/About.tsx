@@ -17,33 +17,47 @@ export default function About() {
     const inView = useInView(ref, { once: true, margin: '-100px' });
 
     return (
-        <section id="about" ref={ref} className="py-24 px-20 max-w-6xl mx-auto">
+        <section id="about" ref={ref} className="py-24 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
             <motion.h2
                 custom={0}
                 variants={fadeUp}
                 initial="hidden"
                 animate={inView ? 'visible' : 'hidden'}
-                className="section-title text-white mb-12"
+                className="section-title text-center lg:text-left text-white mb-8 lg:mb-12"
             >
                 About{' '}
                 <span className="text-cyan-400">Me</span>
             </motion.h2>
 
-            <div className="grid grid-cols-2 gap-12 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
                 {/* Left — Text content */}
-                <div className="flex flex-col gap-6">
-                    {aboutMe.paragraphs.map((para, i) => (
-                        <motion.p
-                            key={i}
-                            custom={i + 1}
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate={inView ? 'visible' : 'hidden'}
-                            className="text-slate-300 leading-relaxed text-sm"
-                        >
-                            {para}
-                        </motion.p>
-                    ))}
+                <div className="flex flex-col gap-8 items-center lg:items-start text-center lg:text-left">
+                    <div className="flex flex-col gap-6 w-full">
+                        {aboutMe.paragraphs.map((para, i) => (
+                            <motion.p
+                                key={i}
+                                custom={i + 1}
+                                variants={fadeUp}
+                                initial="hidden"
+                                animate={inView ? 'visible' : 'hidden'}
+                                className="text-slate-300 leading-relaxed text-base sm:text-lg lg:text-sm font-light text-center"
+                            >
+                                {para}
+                            </motion.p>
+                        ))}
+                    </div>
+
+                    {/* Resume Button (Styled like the mobile reference) */}
+                    <motion.a
+                        href="#"
+                        custom={2}
+                        variants={fadeUp}
+                        initial="hidden"
+                        animate={inView ? 'visible' : 'hidden'}
+                        className="mt-6 w-[80%] max-w-[300px] lg:w-auto bg-white text-black font-bold tracking-widest text-sm py-4 px-8 rounded flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] transition-shadow"
+                    >
+                        RESUME
+                    </motion.a>
 
                     {/* Highlights */}
                     <motion.div
@@ -51,7 +65,7 @@ export default function About() {
                         variants={fadeUp}
                         initial="hidden"
                         animate={inView ? 'visible' : 'hidden'}
-                        className="grid grid-cols-2 gap-4 mt-2"
+                        className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 w-full"
                     >
                         {aboutMe.highlights.map(({ icon, label, sub }) => (
                             <div
@@ -59,7 +73,7 @@ export default function About() {
                                 className="glass-card p-4 flex items-center gap-3 hover:border-cyan-400/30 transition-colors"
                             >
                                 <span className="text-2xl">{icon}</span>
-                                <div>
+                                <div className="text-left">
                                     <p className="text-white font-semibold text-sm">{label}</p>
                                     <p className="text-slate-400 text-xs">{sub}</p>
                                 </div>

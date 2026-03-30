@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { personalInfo, stats } from '../data/portfolioData';
 import TerminalWindow from './TerminalWindow';
@@ -9,7 +9,22 @@ export default function Hero() {
     const [roleIndex, setRoleIndex] = useState(0);
     const [displayed, setDisplayed] = useState('');
     const [typing, setTyping] = useState(true);
-    const [visitCount] = useState(321);
+    const [visitCount, setVisitCount] = useState<number | string>('...');
+    const hasFetched = useRef(false);
+
+    useEffect(() => {
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+
+        fetch('https://abacus.jasoncameron.dev/hit/jakharmonika364/portfolio.visits')
+            .then(res => res.json())
+            .then(data => setVisitCount(data.value || 321))
+            .catch(() => {
+                const localCount = Number(localStorage.getItem('port_visits') || '321') + 1;
+                localStorage.setItem('port_visits', String(localCount));
+                setVisitCount(localCount);
+            });
+    }, []);
 
     // Typewriter effect
     useEffect(() => {

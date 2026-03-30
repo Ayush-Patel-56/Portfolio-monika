@@ -11,7 +11,18 @@ export default function Contact() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real scenario, send to a backend or Formspree
+        
+        // Build the WhatsApp message template
+        const text = `Hello Monika! 👋\n\n*Name:* ${form.name}\n*Email:* ${form.email}\n*Message:* ${form.message}`;
+        const encodedText = encodeURIComponent(text);
+        
+        // Clean the phone number to be purely digits
+        const whatsappNumber = personalInfo.whatsapp.replace(/[^0-9]/g, '');
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedText}`;
+        
+        // Open WhatsApp in a new tab
+        window.open(whatsappUrl, '_blank');
+
         setSubmitted(true);
         setTimeout(() => setSubmitted(false), 3000);
         setForm({ name: '', email: '', message: '' });

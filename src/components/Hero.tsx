@@ -98,56 +98,49 @@ export default function Hero() {
                     className="relative flex flex-col items-center"
                 >
                     {/* Glowing bottom line */}
-                    <div className="relative">
-                        <div
-                            className="w-72 h-80 rounded-2xl overflow-hidden relative"
-                            style={{
-                                background: 'linear-gradient(180deg, rgba(34,211,238,0.05) 0%, rgba(34,211,238,0.1) 100%)',
-                                border: '1px solid rgba(34,211,238,0.15)',
-                            }}
-                        >
-                            {/* Placeholder avatar with gradient */}
-                            <div className="w-full h-full flex items-end justify-center bg-gradient-to-b from-bg-secondary to-bg-primary relative overflow-hidden">
-                                {/* Silhouette-style placeholder */}
-                                <div
-                                    className="absolute bottom-0 w-56 h-72 rounded-t-full opacity-80"
+                    {/* Floating Image without container */}
+                    <div className="relative group flex flex-col items-center mt-4 -ml-8 md:-ml-16 lg:-ml-24 xl:-ml-36 w-full">
+                        {/* Massively enlarged bounding box shifted left */}
+                        <div className="relative w-[110%] md:w-[130%] max-w-[700px] h-[500px] md:h-[650px] flex items-end justify-center">
+                            
+                            {/* Ambient background glow effect behind the transparent image */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+                            
+                            {/* The overflow-hidden container creates a perfectly flat "floor" cut at the bottom if the image has uneven edges */}
+                            <div className="absolute inset-x-0 top-0 bottom-0 overflow-hidden flex items-end justify-center z-10">
+                                {/* Real Image */}
+                                <img
+                                    src="/monika.png"
+                                    alt="Monika Jakhar"
+                                    className="w-[120%] h-[120%] max-w-none ml-[-10%] object-contain transition-transform duration-500 ease-out group-hover:scale-105"
                                     style={{
-                                        background: 'linear-gradient(180deg, rgba(34,211,238,0.15) 0%, rgba(34,211,238,0.05) 100%)',
+                                        objectPosition: 'center bottom',
+                                        filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.6))',
+                                        transformOrigin: 'bottom center'
                                     }}
                                 />
-                                <svg
-                                    viewBox="0 0 200 260"
-                                    className="absolute bottom-0 w-52 opacity-60"
-                                    fill="none"
-                                >
-                                    {/* Body */}
-                                    <ellipse cx="100" cy="220" rx="70" ry="50" fill="rgba(34,211,238,0.1)" />
-                                    {/* Head */}
-                                    <circle cx="100" cy="80" r="45" fill="rgba(34,211,238,0.12)" />
-                                    {/* Arms crossed suggestion */}
-                                    <path d="M40 160 Q100 140 160 160" stroke="rgba(34,211,238,0.15)" strokeWidth="20" strokeLinecap="round" />
-                                    {/* Tech text on hoodie */}
-                                    <text x="100" y="190" textAnchor="middle" fill="rgba(34,211,238,0.4)" fontSize="10" fontFamily="monospace">&lt;/dev&gt;</text>
-                                </svg>
-                                <div className="absolute top-4 right-4 text-cyan-400/30 font-mono text-xs">{ }</div>
                             </div>
+                            
+                            {/* Base glowing rest line placed exactly at the floor edge (bottom-0) */}
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[4px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent blur-[5px] z-20 pointer-events-none" />
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent z-30 pointer-events-none" />
                         </div>
 
-                        {/* Glow at bottom */}
-                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-48 h-1 bg-cyan-400/50 blur-sm rounded-full" />
-                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-0.5 bg-cyan-400 rounded-full" />
+                        {/* Signature-style name gracefully overlapping image base */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1, duration: 0.8 }}
+                            className="-mt-12 mr-16 self-end sm:mr-32 relative z-40 text-white/95 text-6xl sm:text-7xl italic tracking-wide pointer-events-none"
+                            style={{ 
+                                fontFamily: "cursive, 'Brush Script MT', 'Dancing Script', serif",
+                                textShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                                transform: 'rotate(-5deg)'
+                            }}
+                        >
+                            {personalInfo.signature}
+                        </motion.div>
                     </div>
-
-                    {/* Signature-style name below image */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                        className="mt-4 font-mono text-cyan-400/60 text-xl italic tracking-wider"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                    >
-                        {personalInfo.signature}
-                    </motion.div>
                 </motion.div>
 
                 {/* Right — Content */}

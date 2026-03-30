@@ -11,12 +11,13 @@ export const personalInfo = {
     linkedin: "https://www.linkedin.com/in/monika-jakhar-186a04361/",
     instagram: "https://www.instagram.com/_monika_jakhar05/",
     twitter: "",
+    whatsapp: "+91 9050954054", // Monika's WhatsApp
     signature: "Monika Jakhar",
 };
 
 export const stats = [
-    { count: "15+", label: "Projects Completed" },
-    { count: "500+", label: "GitHub Contributions" },
+    { count: "3+", label: "Projects Completed" },
+    { count: "100+", label: "GitHub Contributions" },
     { count: "4+", label: "Open Source" },
     { count: "6+", label: "Months Experience" },
 ];

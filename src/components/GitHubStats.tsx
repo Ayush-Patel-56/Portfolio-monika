@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FiStar, FiGitPullRequest, FiFolder, FiUsers, FiGithub, FiActivity } from 'react-icons/fi';
 
 // ── Monika's real GitHub stats (jakharmonika364) ─────────────────────────────
 const GITHUB_USERNAME = 'jakharmonika364';
-const stats = [
+const FALLBACK_STATS = [
     { icon: <FiStar size={20} />, value: '2+', label: 'Total Stars', color: '#facc15' },
     { icon: <FiGitPullRequest size={20} />, value: '9+', label: 'PRs Merged', color: '#a78bfa' },
     { icon: <FiFolder size={20} />, value: '20', label: 'Repositories', color: '#22d3ee' },
@@ -12,7 +12,7 @@ const stats = [
 ];
 
 // Contribution activity sequence matching the requested aesthetic (Last 30 days)
-const contributionData = [
+const FALLBACK_CONTRIBUTIONS = [
     { day: '23', count: 1 },
     { day: '24', count: 2 },
     { day: '25', count: 9 },
@@ -54,11 +54,10 @@ const PAD_R = 20;
 const PAD_T = 30;
 const PAD_B = 44;
 
-function ContributionChart({ name }: { name: string }) {
+function ContributionChart({ name, data }: { name: string, data: { day: string, count: number }[] }) {
     const [tooltip, setTooltip] = useState<{ x: number; y: number; day: string; count: number } | null>(null);
 
-    const data = contributionData;
-    const gridMax = 25; // As per the image
+    const gridMax = Math.max(10, ...data.map(d => d.count)) + 2;
 
     // Map data → SVG coords
     const points = data.map((d, i) => ({
@@ -72,7 +71,9 @@ function ContributionChart({ name }: { name: string }) {
         points.map(p => `L${p.svgX},${p.svgY}`).join(' ') +
         ` L${points[points.length - 1].svgX},${CHART_H - PAD_B} Z`;
 
-    const yTicks = [0, 5, 10, 15, 20, 25];
+    // Generate yTicks spaced evenly
+    const tickStep = Math.ceil(gridMax / 5);
+    const yTicks = [0, tickStep, tickStep * 2, tickStep * 3, tickStep * 4, tickStep * 5].filter(t => t <= gridMax + tickStep);
 
     return (
         <div className="relative w-full overflow-x-auto">
@@ -234,6 +235,58 @@ function ContributionChart({ name }: { name: string }) {
 export default function GitHubStats() {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true, margin: '-80px' });
+    const hasFetched = useRef(false);
+    
+    const [liveStats, setLiveStats] = useState(FALLBACK_STATS);
+    const [liveData, setLiveData] = useState(FALLBACK_CONTRIBUTIONS);
+
+    useEffect(() => {
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+
+        const fetchGitHubData = async () => {
+            try {
+                // Fetch basic user repo count
+                const [userRes, prRes, reposRes, contribRes] = await Promise.all([
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
+                    fetch(`https://api.github.com/search/issues?q=author:${GITHUB_USERNAME}+type:pr+is:merged`),
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`),
+                    fetch(`https://github-contributions-api.deno.dev/${GITHUB_USERNAME}.json`)
+                ]);
+
+                if (userRes.ok && contribRes.ok) {
+                    const userData = await userRes.json();
+                    const prData = await prRes.ok ? await prRes.json() : { total_count: 0 };
+                    const reposData = await reposRes.ok ? await reposRes.json() : [];
+                    const contribData = await contribRes.json();
+
+                    const totalStars = Array.isArray(reposData) ? reposData.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0) : 0;
+
+                    setLiveStats([
+                        { icon: <FiStar size={20} />, value: totalStars.toString(), label: 'Total Stars', color: '#facc15' },
+                        { icon: <FiGitPullRequest size={20} />, value: (prData.total_count || 0).toString(), label: 'PRs Merged', color: '#a78bfa' },
+                        { icon: <FiFolder size={20} />, value: (userData.public_repos || 0).toString(), label: 'Repositories', color: '#22d3ee' },
+                        { icon: <FiUsers size={20} />, value: (contribData.totalContributions || 0).toString(), label: 'Contributions', color: '#4ade80' },
+                    ]);
+
+                    if (contribData.contributions) {
+                        const flat = contribData.contributions.flat();
+                        const todayStr = new Date().toISOString().split('T')[0];
+                        const past = flat.filter((x: any) => x.date <= todayStr);
+                        const last31 = past.slice(-31);
+                        setLiveData(last31.map((c: any) => ({
+                            day: String(new Date(c.date).getDate()),
+                            count: c.contributionCount
+                        })));
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch live github stats", err);
+            }
+        };
+
+        fetchGitHubData();
+    }, []);
 
     return (
         <section id="github" ref={ref} className="py-16 px-20 max-w-6xl mx-auto">
@@ -258,7 +311,7 @@ export default function GitHubStats() {
                 transition={{ delay: 0.15, duration: 0.55 }}
                 className="grid grid-cols-4 gap-4 mb-6"
             >
-                {stats.map((s, i) => (
+                {liveStats.map((s, i) => (
                     <motion.div
                         key={s.label}
                         initial={{ opacity: 0, y: 20 }}
@@ -321,7 +374,7 @@ export default function GitHubStats() {
 
                 {/* Chart Container with padding */}
                 <div className="px-6 py-8">
-                    <ContributionChart name="Monika Jakhar" />
+                    <ContributionChart name="Monika Jakhar" data={liveData} />
                 </div>
             </motion.div>
         </section>

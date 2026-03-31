@@ -47,17 +47,7 @@ export default function About() {
                         ))}
                     </div>
 
-                    {/* Resume Button (Styled like the mobile reference) */}
-                    <motion.a
-                        href="#"
-                        custom={2}
-                        variants={fadeUp}
-                        initial="hidden"
-                        animate={inView ? 'visible' : 'hidden'}
-                        className="mt-6 w-[80%] max-w-[300px] lg:w-auto bg-white text-black font-bold tracking-widest text-sm py-4 px-8 rounded flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] transition-shadow"
-                    >
-                        RESUME
-                    </motion.a>
+
 
                     {/* Highlights */}
                     <motion.div
@@ -82,34 +72,49 @@ export default function About() {
                     </motion.div>
                 </div>
 
-                {/* Right — What drives me */}
-                <motion.div
-                    custom={4}
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={inView ? 'visible' : 'hidden'}
-                    className="glass-card p-6 relative overflow-hidden"
-                >
-                    {/* Big faded icon */}
-                    <div
-                        className="absolute top-4 right-4 text-8xl opacity-5 select-none pointer-events-none"
+                {/* Right Column */}
+                <div className="flex flex-col gap-6 lg:gap-8 w-full items-center lg:items-end">
+                    {/* Right — What drives me */}
+                    <motion.div
+                        custom={4}
+                        variants={fadeUp}
+                        initial="hidden"
+                        animate={inView ? 'visible' : 'hidden'}
+                        className="glass-card p-6 relative overflow-hidden w-full"
                     >
-                        🧠
-                    </div>
+                        {/* Big faded icon */}
+                        <div
+                            className="absolute top-4 right-4 text-8xl opacity-5 select-none pointer-events-none"
+                        >
+                            🧠
+                        </div>
 
-                    <h3 className="text-white font-bold text-lg mb-6">What drives me?</h3>
-                    <div className="flex flex-col gap-5">
-                        {aboutMe.drivesMe.map((item, i) => (
-                            <div key={i} className="flex items-start gap-3">
-                                <div
-                                    className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
-                                    style={{ backgroundColor: driveDotColors[i % driveDotColors.length] }}
-                                />
-                                <p className="text-slate-300 text-sm leading-relaxed">{item}</p>
-                            </div>
-                        ))}
-                    </div>
-                </motion.div>
+                        <h3 className="text-white font-bold text-lg mb-6">What drives me?</h3>
+                        <div className="flex flex-col gap-5">
+                            {aboutMe.drivesMe.map((item, i) => (
+                                <div key={i} className="flex items-start gap-3">
+                                    <div
+                                        className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
+                                        style={{ backgroundColor: driveDotColors[i % driveDotColors.length] }}
+                                    />
+                                    <p className="text-slate-300 text-sm leading-relaxed">{item}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* Resume Button */}
+                    <motion.a
+                        href="#"
+                        custom={5}
+                        variants={fadeUp}
+                        initial="hidden"
+                        animate={inView ? 'visible' : 'hidden'}
+                        className="w-[80%] sm:w-[60%] lg:w-auto bg-white text-black font-bold tracking-widest text-sm py-4 px-12 rounded flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] transition-shadow"
+                    >
+                        RESUME
+                    </motion.a>
+                </div>
             </div>
         </section>
     );

@@ -29,12 +29,12 @@ export default function Contact() {
     };
 
     return (
-        <section id="contact" ref={ref} className="py-24 px-20 max-w-6xl mx-auto">
+        <section id="contact" ref={ref} className="py-24 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
             <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6 }}
-                className="section-title text-white mb-4"
+                className="section-title text-white mb-4 text-center lg:text-left"
             >
                 Get In{' '}
                 <span className="text-cyan-400">Touch</span>
@@ -43,12 +43,12 @@ export default function Contact() {
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{ delay: 0.2 }}
-                className="text-slate-400 text-sm mb-12"
+                className="text-slate-400 text-sm mb-12 text-center lg:text-left"
             >
                 Have a project in mind or want to collaborate? Feel free to reach out!
             </motion.p>
 
-            <div className="grid grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
                 {/* Left — Info */}
                 <motion.div
                     initial={{ opacity: 0, x: -40 }}

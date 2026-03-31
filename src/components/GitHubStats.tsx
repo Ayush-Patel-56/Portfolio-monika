@@ -289,7 +289,7 @@ export default function GitHubStats() {
     }, []);
 
     return (
-        <section id="github" ref={ref} className="py-16 px-20 max-w-6xl mx-auto">
+        <section id="github" ref={ref} className="py-16 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
             {/* Heading */}
             <motion.div
                 initial={{ opacity: 0, y: 24 }}
@@ -297,7 +297,7 @@ export default function GitHubStats() {
                 transition={{ duration: 0.6 }}
                 className="text-center mb-10"
             >
-                <h2 className="text-4xl font-black text-white mb-2 flex items-center justify-center gap-3">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-2 flex items-center justify-center gap-3">
                     <span className="text-cyan-400 font-mono text-3xl">&lt;/&gt;</span>
                     GitHub Activity
                 </h2>

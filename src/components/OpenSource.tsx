@@ -144,7 +144,7 @@ export default function OpenSource() {
 
 
     return (
-        <section id="opensource" ref={ref} className="py-24 px-20 max-w-6xl mx-auto">
+        <section id="opensource" ref={ref} className="py-24 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
             {/* Section heading */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}

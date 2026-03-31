@@ -106,7 +106,7 @@ export default function CodingProfiles() {
     const hoveredPlatform = platforms.find(p => p.id === hovered);
 
     return (
-        <section id="profiles" ref={ref} className="relative overflow-hidden py-8 px-20">
+        <section id="profiles" ref={ref} className="relative overflow-hidden py-8 px-6 md:px-12 lg:px-20">
 
             {/* Hidden SVG defs for rocky noise filter */}
             <svg width="0" height="0" className="absolute">
@@ -248,7 +248,7 @@ export default function CodingProfiles() {
                     </motion.div>
 
                     {/* Platform circles row */}
-                    <div className="flex items-center justify-center gap-10 md:gap-14">
+                    <div className="grid grid-cols-2 sm:flex items-center justify-center gap-8 sm:gap-10 md:gap-14">
                         {platforms.map((platform, idx) => {
                             const isHovered = hovered === platform.id;
 

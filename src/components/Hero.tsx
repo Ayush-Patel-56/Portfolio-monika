@@ -60,7 +60,7 @@ export default function Hero() {
     return (
         <section
             id="home"
-            className="relative min-h-screen flex items-center overflow-hidden"
+            className="relative min-h-screen flex flex-col lg:flex-row items-center overflow-hidden"
             style={{
                 background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(34,211,238,0.07) 0%, transparent 70%)',
             }}
@@ -78,79 +78,70 @@ export default function Hero() {
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Visit counter */}
-            {/* Total Visits Badge (Relative on mobile to sit above photo, Absolute on Desktop) */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="relative lg:absolute mt-10 lg:mt-0 top-auto lg:top-6 left-1/2 -translate-x-1/2 glass-card px-4 py-1.5 flex lg:inline-flex items-center gap-3 w-fit z-20"
-            >
-                <span className="text-slate-400 text-xs text-center">Total Visits</span>
-                <span className="text-cyan-400 font-bold text-sm font-mono text-center">{visitCount}</span>
-            </motion.div>
-
-            <div className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-8 lg:mt-0">
-                {/* Left — Photo (First on Mobile) */}
+            {/* ══════════ MOBILE LAYOUT (< lg) ══════════ */}
+            <div className="lg:hidden w-full flex flex-col items-center relative z-10 pt-16 pb-12 px-5">
+                {/* Visit counter — top center */}
                 <motion.div
-                    initial={{ opacity: 0, x: -60 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut' }}
-                    className="relative flex flex-col items-center"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="glass-card px-4 py-1.5 flex items-center gap-3 mb-6"
                 >
-                    {/* Floating Image without container */}
-                    <div className="relative group flex flex-col items-center mt-4 lg:mt-0 lg:-ml-12 xl:-ml-24 w-full">
-                        {/* Enlarged bounding box shifted left on desktop only */}
-                        <div className="relative w-[100%] sm:w-[90%] lg:w-[130%] max-w-[700px] h-[350px] sm:h-[450px] md:h-[500px] lg:h-[650px] flex items-end justify-center">
-                            
-                            {/* Ambient background glow effect behind the transparent image */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-cyan-500/10 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none" />
-                            
-                            {/* The overflow-hidden container creates a perfectly flat "floor" cut at the bottom if the image has uneven edges */}
-                            <div className="absolute inset-x-0 top-0 bottom-0 overflow-hidden flex items-end justify-center z-10 w-full">
-                                {/* Real Image */}
-                                <img
-                                    src="/monika.png"
-                                    alt="Monika Jakhar"
-                                    className="w-[110%] h-[110%] lg:w-[120%] lg:h-[120%] max-w-none ml-[-5%] lg:ml-[-10%] object-contain transition-transform duration-500 ease-out group-hover:scale-105"
-                                    style={{
-                                        objectPosition: 'center bottom',
-                                        filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.6))',
-                                        transformOrigin: 'bottom center'
-                                    }}
-                                />
-                            </div>
-                            
-                            {/* Base glowing rest line placed exactly at the floor edge (bottom-0) */}
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100%] sm:w-[120%] h-[3px] lg:h-[4px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent blur-[4px] lg:blur-[5px] z-20 pointer-events-none" />
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] sm:w-full h-px lg:h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent z-30 pointer-events-none" />
-                        </div>
-
-                        {/* Signature-style name gracefully overlapping image base */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1, duration: 0.8 }}
-                            className="-mt-8 sm:-mt-12 self-center lg:self-end lg:mr-24 relative z-40 text-white/95 text-5xl sm:text-7xl italic tracking-wide pointer-events-none"
-                            style={{ 
-                                fontFamily: "cursive, 'Brush Script MT', 'Dancing Script', serif",
-                                textShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                                transform: 'rotate(-5deg)'
-                            }}
-                        >
-                            {personalInfo.signature}
-                        </motion.div>
-                    </div>
+                    <span className="text-slate-400 text-xs">Total Visits</span>
+                    <span className="text-cyan-400 font-bold text-sm font-mono">{visitCount}</span>
                 </motion.div>
 
-                {/* Right — Content (Second on Mobile) */}
+                {/* Portrait */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                    className="relative w-full max-w-[320px] flex flex-col items-center"
+                >
+                    {/* Ambient glow */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-cyan-500/10 rounded-full blur-[60px] pointer-events-none" />
+
+                    {/* Image container */}
+                    <div className="relative w-full h-[340px] flex items-end justify-center overflow-hidden">
+                        <img
+                            src="/monika.png"
+                            alt="Monika Jakhar"
+                            className="w-full h-full object-contain"
+                            style={{
+                                objectPosition: 'center bottom',
+                                filter: 'drop-shadow(0 12px 20px rgba(0,0,0,0.6))',
+                            }}
+                        />
+                    </div>
+
+                    {/* Neon floor line */}
+                    <div className="w-[90%] h-[3px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent blur-[4px]" />
+                    <div className="w-[70%] h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent -mt-[2px]" />
+
+                    {/* Signature */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1, duration: 0.8 }}
+                        className="mt-2 text-white/90 text-4xl italic tracking-wide pointer-events-none"
+                        style={{
+                            fontFamily: "cursive, 'Brush Script MT', 'Dancing Script', serif",
+                            textShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                            transform: 'rotate(-5deg)',
+                        }}
+                    >
+                        {personalInfo.signature}
+                    </motion.div>
+                </motion.div>
+
+                {/* Text content */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="flex flex-col gap-5 text-center lg:text-left"
+                    className="flex flex-col items-center gap-4 mt-8 w-full"
                 >
-                    <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-white leading-tight">
+                    <motion.h1 variants={itemVariants} className="text-3xl sm:text-4xl font-black text-white leading-tight text-center">
                         Hi, I am{' '}
                         <span
                             className="text-transparent bg-clip-text"
@@ -160,9 +151,9 @@ export default function Hero() {
                         </span>
                     </motion.h1>
 
-                    <motion.p variants={itemVariants} className="text-lg text-slate-300 font-medium">
+                    <motion.p variants={itemVariants} className="text-base text-slate-300 font-medium text-center">
                         {displayed}
-                        <span className="inline-block w-0.5 h-5 bg-cyan-400 ml-0.5 animate-blink" />
+                        <span className="inline-block w-0.5 h-4 bg-cyan-400 ml-0.5 animate-blink" />
                     </motion.p>
 
                     <motion.a
@@ -174,20 +165,123 @@ export default function Hero() {
                         <span className="text-xs">↗</span>
                     </motion.a>
 
-                    <motion.div variants={itemVariants}>
+                    <motion.div variants={itemVariants} className="w-full">
                         <TerminalWindow />
                     </motion.div>
 
-                    {/* Stats */}
-                    <motion.div variants={itemVariants} className="grid grid-cols-4 gap-4 mt-2">
+                    {/* Stats — 2 column on mobile */}
+                    <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 mt-2 w-full">
                         {stats.map(({ count, label }) => (
-                            <div key={label} className="flex flex-col gap-1">
-                                <span className="text-2xl font-black text-cyan-400">{count}</span>
-                                <span className="text-xs text-slate-400 leading-tight">{label}</span>
+                            <div key={label} className="flex flex-col items-center gap-1 glass-card py-3">
+                                <span className="text-xl font-black text-cyan-400">{count}</span>
+                                <span className="text-[10px] text-slate-400 leading-tight text-center">{label}</span>
                             </div>
                         ))}
                     </motion.div>
                 </motion.div>
+            </div>
+
+            {/* ══════════ DESKTOP LAYOUT (≥ lg) ══════════ */}
+            <div className="hidden lg:flex w-full min-h-screen items-center relative z-10">
+                {/* Visit counter — absolute top center */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute top-6 left-1/2 -translate-x-1/2 glass-card px-4 py-1.5 flex items-center gap-3 z-20"
+                >
+                    <span className="text-slate-400 text-xs">Total Visits</span>
+                    <span className="text-cyan-400 font-bold text-sm font-mono">{visitCount}</span>
+                </motion.div>
+
+                <div className="max-w-6xl mx-auto px-20 w-full grid grid-cols-2 gap-12 items-center">
+                    {/* Left — Photo */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -60 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                        className="relative flex flex-col items-center"
+                    >
+                        <div className="relative group flex flex-col items-center -ml-12 xl:-ml-24 w-full">
+                            <div className="relative w-[130%] max-w-[700px] h-[650px] flex items-end justify-center">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+                                <div className="absolute inset-x-0 top-0 bottom-0 overflow-hidden flex items-end justify-center z-10">
+                                    <img
+                                        src="/monika.png"
+                                        alt="Monika Jakhar"
+                                        className="w-[120%] h-[120%] max-w-none ml-[-10%] object-contain transition-transform duration-500 ease-out group-hover:scale-105"
+                                        style={{
+                                            objectPosition: 'center bottom',
+                                            filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.6))',
+                                            transformOrigin: 'bottom center',
+                                        }}
+                                    />
+                                </div>
+                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[4px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent blur-[5px] z-20 pointer-events-none" />
+                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent z-30 pointer-events-none" />
+                            </div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1, duration: 0.8 }}
+                                className="-mt-12 self-end mr-24 relative z-40 text-white/95 text-7xl italic tracking-wide pointer-events-none"
+                                style={{
+                                    fontFamily: "cursive, 'Brush Script MT', 'Dancing Script', serif",
+                                    textShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                                    transform: 'rotate(-5deg)',
+                                }}
+                            >
+                                {personalInfo.signature}
+                            </motion.div>
+                        </div>
+                    </motion.div>
+
+                    {/* Right — Content */}
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="flex flex-col gap-5"
+                    >
+                        <motion.h1 variants={itemVariants} className="text-5xl xl:text-6xl font-black text-white leading-tight">
+                            Hi, I am{' '}
+                            <span
+                                className="text-transparent bg-clip-text"
+                                style={{ backgroundImage: 'linear-gradient(135deg, #22d3ee 0%, #818cf8 100%)' }}
+                            >
+                                {personalInfo.name}
+                            </span>
+                        </motion.h1>
+
+                        <motion.p variants={itemVariants} className="text-lg text-slate-300 font-medium">
+                            {displayed}
+                            <span className="inline-block w-0.5 h-5 bg-cyan-400 ml-0.5 animate-blink" />
+                        </motion.p>
+
+                        <motion.a
+                            variants={itemVariants}
+                            href={`mailto:${personalInfo.email}`}
+                            className="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2 text-sm"
+                        >
+                            {personalInfo.email}
+                            <span className="text-xs">↗</span>
+                        </motion.a>
+
+                        <motion.div variants={itemVariants}>
+                            <TerminalWindow />
+                        </motion.div>
+
+                        <motion.div variants={itemVariants} className="grid grid-cols-4 gap-4 mt-2">
+                            {stats.map(({ count, label }) => (
+                                <div key={label} className="flex flex-col gap-1">
+                                    <span className="text-2xl font-black text-cyan-400">{count}</span>
+                                    <span className="text-xs text-slate-400 leading-tight">{label}</span>
+                                </div>
+                            ))}
+                        </motion.div>
+                    </motion.div>
+                </div>
             </div>
         </section>
     );

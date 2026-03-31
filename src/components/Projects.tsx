@@ -381,32 +381,32 @@ export default function Projects() {
     const row2 = flagshipProjects.filter(p => ['soniq', 'ecobite'].includes(p.id));
 
     return (
-        <section id="projects" ref={ref} className="py-24 px-20 max-w-6xl mx-auto">
+        <section id="projects" ref={ref} className="py-24 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
             {/* Heading */}
             <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6 }}
-                className="text-4xl font-black text-white text-center mb-14"
+                className="text-3xl sm:text-4xl font-black text-white text-center mb-10 sm:mb-14"
             >
                 Flagship <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #22d3ee, #818cf8)' }}>Projects</span>
             </motion.h2>
 
             {/* Row 1 — 3 column bento */}
-            <div className="grid grid-cols-3 gap-5 mb-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
                 {row1.map((project, idx) => (
                     <ProjectCard key={project.id} project={project} delay={idx * 0.1 + 0.1} />
                 ))}
             </div>
 
             {/* Row 2 — wide + normal */}
-            <div className="grid grid-cols-5 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
                 {/* Wide card spans 3 cols */}
-                <div className="col-span-3">
+                <div className="lg:col-span-3">
                     <ProjectCard project={row2[0]} delay={0.4} />
                 </div>
                 {/* Normal card spans 2 cols */}
-                <div className="col-span-2">
+                <div className="lg:col-span-2">
                     <ProjectCard project={row2[1]} delay={0.5} />
                 </div>
             </div>
